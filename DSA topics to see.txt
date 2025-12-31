@@ -1,0 +1,46 @@
+Insetead of HashMap use Boyer–Moore Voting Algorithm where applicable
+
+Instead of HashMap which will increment the count of each and check for threshold with O(n) space instead we can use Boyer Moore Voting O(1) space.
+
+class Solution {
+    public int majorityElement(int[] nums) {
+        int count = 0;
+        int candidate = 0;
+
+        for (int num : nums) {
+            if (count == 0) {
+                candidate = num;
+            }
+            count += (num == candidate) ? 1 : -1;
+        }
+
+        return candidate;
+    }
+}
+
+🧠 Key idea (intuition)
+
+Think of the majority element as a candidate in an election.
+
+Every time you see the same number → vote +1
+
+Every time you see a different number → vote −1
+
+When votes reach 0, pick a new candidate
+
+👉 Since the majority element appears more than all others combined, it can never be completely canceled out.
+
+nums = [2, 2, 1, 1, 1, 2, 2]
+
+Step-by-step
+Element	Candidate	Count	Explanation
+2	2		1	pick 2
+2	2		2	same → +1
+1	2		1	different → -1
+1	2		0	canceled
+1	1		1	new candidate
+2	1		0	canceled
+2	2		1	new candidate
+
+✅ Final candidate = 2
+
