@@ -1,0 +1,94 @@
+class RideSharingSystem {
+
+    private  Queue<Integer> qRider = new LinkedList<>();
+    private  Queue<Integer> qDriver = new LinkedList<>();
+
+    //if we use private static then leetcode will fail because multiple test cases run using the same class, so old data remains.
+
+    public RideSharingSystem() {
+
+    }
+
+    public void addRider(int riderId) {
+        qRider.offer(riderId);
+
+    }
+
+    public void addDriver(int driverId) {
+        qDriver.offer(driverId);
+
+    }
+
+    public int[] matchDriverWithRider() {
+
+        if (qRider.isEmpty() || qDriver.isEmpty()) {
+            return new int[] { -1, -1 };
+        }
+        return new int[] { qDriver.poll(), qRider.poll() };
+
+    }
+
+    public void cancelRider(int riderId) {
+        if (qRider.isEmpty()) {
+            return;
+        }
+        qRider.removeIf(x -> x == riderId);
+        // qRider = qRider.stream().filter(x -> x != riderId).collect(Collectors.toCollection(LinkedList::new));
+        return;
+    }
+}
+
+/**
+ * Your RideSharingSystem object will be instantiated and called as such:
+ * RideSharingSystem obj = new RideSharingSystem();
+ * obj.addRider(riderId);
+ * obj.addDriver(driverId);
+ * int[] param_3 = obj.matchDriverWithRider();
+ * obj.cancelRider(riderId);
+ */
+
+
+ //Chat GPT
+ 
+// class RideSharingSystem {
+
+//     private Queue<Integer> qRider;
+//     private Queue<Integer> qDriver;
+//     private Set<Integer> activeRiders;
+
+//     public RideSharingSystem() {
+//         qRider = new LinkedList<>();
+//         qDriver = new LinkedList<>();
+//         activeRiders = new HashSet<>();
+//     }
+
+//     public void addRider(int riderId) {
+//         qRider.offer(riderId);
+//         activeRiders.add(riderId);
+//     }
+
+//     public void addDriver(int driverId) {
+//         qDriver.offer(driverId);
+//     }
+
+//     public int[] matchDriverWithRider() {
+
+//         // Remove invalid riders
+//         while (!qRider.isEmpty() && !activeRiders.contains(qRider.peek())) {
+//             qRider.poll();
+//         }
+
+//         if (qRider.isEmpty() || qDriver.isEmpty()) {
+//             return new int[] { -1, -1 };
+//         }
+
+//         int rider = qRider.poll();
+//         activeRiders.remove(rider);
+
+//         return new int[] { qDriver.poll(), rider };
+//     }
+
+//     public void cancelRider(int riderId) {
+//         activeRiders.remove(riderId); // O(1)
+//     }
+// }
